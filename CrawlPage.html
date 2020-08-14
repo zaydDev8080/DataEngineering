@@ -1,0 +1,85 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+
+</head>
+<body>
+<center><h2>Articles</h2></center>
+<div>
+
+ KeyWord: <input type="text" id="myText">
+
+
+<button type="button" onclick="mySearch()">Search</button> <br><br>
+
+
+</div>
+
+<div>
+<table id="mytable" >
+  <thead>
+    <th>headline</th>
+    <th>Link</th>
+    <th>Summary</th>
+    <th>Image</th>
+  </thead>
+  <tbody id="tabledata1">
+
+  </tbody>
+
+
+
+</table>
+<p id ="tabledata2">  </p>
+</div>
+    <script type ="text/javascript">
+       function mySearch() {
+           var currentVal = document.getElementById("myText").value;
+           fetch("http://127.0.0.1:5000/Data?KeyWord="+currentVal)
+               .then((response) => {
+                   return response.json()
+               })
+               .then((data) => {
+                   // Work with JSON data here
+                   console.log(data)
+                   if (data.length > 0) {
+
+                       var temp = "";
+                       data.forEach((u) => {
+                           temp = temp + "<tr >" + "<td> " + u.headline + "</td> " + "<td> " + "<a href=" + u.link + ">" + u.link + "</a>" + "</td> " + "<td> " + u.summary + "</td> " +"<td> " +"<img src="+u.Image+">"+"</td> " + "</tr> ";
+
+                       })
+                       document.getElementById('tabledata1').innerHTML = temp;
+                   }
+
+               })
+               .catch((err) => {
+                   console.log(err)
+               })
+
+       }
+    </script>
+
+</body>
+</html>
