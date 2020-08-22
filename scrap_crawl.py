@@ -27,7 +27,7 @@ for Article in news:
         if (not Article.find('p')):
             summary = ""
         else:
-            summary = Article.find('p')
+            summary = Article.find('p').text
 
         site_Article = fullLink
         hdr = {'User-Agent': 'Mozilla/5.0'}
@@ -44,8 +44,8 @@ for Article in news:
             else: image = imageTag['src']
         print(image)
 
-        print(summary.text)
-        ScrapedDoc1 = {"headline": headline.text, "link": fullLink, "summary": summary.text, "Image": image }
+        print(summary)
+        ScrapedDoc1 = {"headline": headline.text, "link": fullLink, "summary": summary, "Image": image }
         InsertDoc = mycol.insert_one(ScrapedDoc1)
         print("--------------------inserted-------------------")
         print("----------------", InsertDoc.inserted_id, "---------------")
